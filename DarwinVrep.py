@@ -48,7 +48,7 @@ def getPos():
 
 def setPos(writ):
     for key,val in writ.items():
-        vrep.simxSetJointTargetPosition(CLIENT_ID,MOTOR_HANDLES[key],math.radians(val),vrep.simx_opmode_oneshot_wait)
+        vrep.simxSetJointTargetPosition(CLIENT_ID,MOTOR_HANDLES[key],math.radians(val),vrep.simx_opmode_streaming)
 
 class XmlTree(object):
 
@@ -195,7 +195,7 @@ class Action():
 darwin = {1: 90, 2: -90, 3: 67.5, 4: -67.5, 7: 45, 8: -45, 9: 'i', 10: 'i', 13: 'i', 14: 'i', 17: 'i', 18: 'i'}
 tree = XmlTree('data.xml')
 balance = MotionSet(tree.parsexml("152 Balance"), offsets=[darwin])
-#kick = MotionSet(tree.parsexml("18 L kick"),speed=2,offsets=[darwin])
+kick = MotionSet(tree.parsexml("18 L kick"),speed=2,offsets=[darwin])
 #w1 = MotionSet(tree.parsexml("32 F_S_L"),speed=2.1,offsets=[darwin])
 #w2 = MotionSet(tree.parsexml("33 "),speed=2.1,offsets=[darwin])
 #w3 = MotionSet(tree.parsexml("38 F_M_R"),speed=2.7,offsets=[darwin])
@@ -212,4 +212,5 @@ get_handles()
 state = getPos()
 raw_input(">")
 balance.execute()
+kick.execute()
 

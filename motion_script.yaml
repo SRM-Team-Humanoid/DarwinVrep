@@ -1,0 +1,35 @@
+Dummy:
+    - Code : "7 Scratch head"
+      Type : "Page"
+      Speed : "x1"
+      Exclude : [1,2,3,4,5]
+
+    - Code : "5 Push up"
+      Type : "Flow"
+      Speed : "x1"
+      Exclude : []
+        
+
+LeftDodge:
+    - Code : "47 P_L_A"
+      Type : "Page"
+      Speed : "x1"
+      Exclude : []
+
+RightDodge:
+    - Code : "46 P_R_A"
+      Type : "Page"
+      Speed : "x1"
+      Exclude : []
+
+Balance:
+    - Code : "152 Balance"
+      Type : "Page"
+      Speed : "x1"
+      Exclude : []
+
+Walk:
+    - Code : "22 F_S_L"
+      Type : "Flow"
+      Speed : "x1"
+      Exclude : []
