@@ -18,9 +18,11 @@ DEFAULT_SPEED = 200
 TIME_CONST = 0.008
 CLIENT_ID = None
 MOTOR_HANDLES = {}
+dt = 0
 
 
 darwin = {1: 90, 2: -90, 3: 67.5, 4: -67.5, 7: 45, 8: -45, 9: 'i', 10: 'i', 13: 'i', 14: 'i', 17: 'i', 18: 'i'}
+darwin = {1: 90, 2: -90, 3: 67.5, 4: -67.5, 5:45, 7: 45, 8: -45, 9: 'i', 10: 'i', 13: 'i', 14: 'i', 17: 'i', 18: 'i'}
 
 PROCESS_PIPELINE = [darwin]
 
@@ -36,6 +38,7 @@ class DarwinVrep():
 
         self.MOTOR_HANDLES = {}
         self.CLIENT_ID= vrep.simxStart('127.0.0.1',19999,True,True,5000,5)
+        #vrep.simxPauseSimulation(self.CLIENT_ID,True)
 
 
         if CLIENT_ID!=-1:
@@ -67,14 +70,22 @@ class DarwinVrep():
 
 
     def execute_motion(self,vel_sets):
+        vrep.simxSynchronous(self.CLIENT_ID,True)
+        vrep.simxStartSimulation(self.CLIENT_ID,vrep.simx_opmode_oneshot)
         for dur,vels in vel_sets:
+            vrep.simxPauseCommunication(self.CLIENT_ID,1)
             for key in range(1,19):
-                vrep.simxSetJointTargetVelocity(self.CLIENT_ID,self.MOTOR_HANDLES[key],vels[key],vrep.simx_opmode_streaming)
+                vrep.simxSetJointTargetVelocity(self.CLIENT_ID,self.MOTOR_HANDLES[key],vels[key],vrep.simx_opmode_oneshot)
 
+            vrep.simxPauseCommunication(self.CLIENT_ID,0)
             time.sleep(dur)
+            vrep.simxSynchronousTrigger(self.CLIENT_ID)
 
+        vrep.simxPauseCommunication(self.CLIENT_ID,1)
         for key in range(1,19):
-             vrep.simxSetJointTargetVelocity(self.CLIENT_ID,self.MOTOR_HANDLES[key],0,vrep.simx_opmode_streaming)
+             vrep.simxSetJointTargetVelocity(self.CLIENT_ID,self.MOTOR_HANDLES[key],0,vrep.simx_opmode_oneshot)
+        vrep.simxPauseCommunication(self.CLIENT_ID,0)
+        vrep.simxSynchronousTrigger(self.CLIENT_ID)
 
 
 
@@ -269,6 +280,7 @@ class Robot(object):
             current = current[2]
             self.state = current
             dur = (n_frames * TIME_CONST)/spd_factor
+            dur = dur
             #print dur
             
 
@@ -317,6 +329,20 @@ class Robot(object):
 
 r = Robot(18,"motion_script.yaml")
 time.sleep(1)
-r.execute("Walk")
-r.execute("Balance")
+#r.execute("Balance")
+#r.execute("Kick")
+#r.execute("Balance")
+#r.execute("Random")
+#r.execute("W_Init")
+#for i in range(30):
+   #r.execute("W_Move")
+
+#r.execute("Balance")
+
+#r.execute("Balance")
+#r.execute("Walk")
+#r.execute("Bravo")
+#r.execute("Sit")
+#r.execute("Stand")
+r.execute("Scratch")
 

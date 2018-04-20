@@ -33,3 +33,102 @@ Walk:
       Type : "Flow"
       Speed : "x1"
       Exclude : []
+
+W_Init:
+    - Code : "32 F_S_L"
+      Type : "Page"
+      Speed : "x2"
+      Exclude : []
+
+    - Code : "33 "
+      Type : "Page"
+      Speed : "x2"
+      Exclude : []
+
+W_Move:
+    - Code : "38 F_M_R"
+      Type : "Page"
+      Speed : "x2"
+      Exclude : []
+
+    - Code : "39 "
+      Type : "Page"
+      Speed : "x2"
+      Exclude : []
+
+    - Code : "36 F_M_L"
+      Type : "Page"
+      Speed : "x2"
+      Exclude : []
+
+    - Code : "37 "
+      Type : "Page"
+      Speed : "x2"
+      Exclude : []
+
+Clap Ready:
+    - Code : "19 Clap Ready"
+      Type : "Flow"
+      Speed : "x1"
+      Exclude : []
+
+
+Clapping:
+    - Code : "20 Clapping"
+      Type : "Flow"
+      Speed : "x1"
+      Exclude : []
+
+
+Bow:
+    - Code : "1 Bow"
+      Type : "Flow"
+      Speed : "x1"
+      Exclude : []
+
+Rap Chest:
+    - Code : "3 Rap chest"
+      Type : "Flow"
+      Speed : "x1"
+      Exclude : []
+
+Bravo:
+    - Code : "2 Bravo"
+      Type : "Flow"
+      Speed : "x1"
+      Exclude : []
+
+Scratch:
+    - Code : "4 Scratch head"
+      Type : "Flow"
+      Speed : "x1"
+      Exclude : []
+
+Kick:
+    - Code : "9 L kick"
+      Type : "Flow"
+      Speed : "x1"
+      Exclude : []
+
+Sit:
+    - Code : "15 Sit down"
+      Type : "Flow"
+      Speed : "x1"
+      Exclude : []
+
+Stand:
+    - Code : "16 Stand up"
+      Type : "Flow"
+      Speed : "x1"
+      Exclude : []
+
+Random:
+    - Code : "46 FLT_S_L"
+      Type : "Flow"
+      Speed : "x1"
+      Exclude : []
+
+
+
+
+
