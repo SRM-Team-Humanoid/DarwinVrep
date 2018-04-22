@@ -1,27 +1,3 @@
-Dummy:
-    - Code : "7 Scratch head"
-      Type : "Page"
-      Speed : "x1"
-      Exclude : [1,2,3,4,5]
-
-    - Code : "5 Push up"
-      Type : "Flow"
-      Speed : "x1"
-      Exclude : []
-        
-
-LeftDodge:
-    - Code : "47 P_L_A"
-      Type : "Page"
-      Speed : "x1"
-      Exclude : []
-
-RightDodge:
-    - Code : "46 P_R_A"
-      Type : "Page"
-      Speed : "x1"
-      Exclude : []
-
 Balance:
     - Code : "152 Balance"
       Type : "Page"
@@ -65,69 +41,42 @@ W_Move:
       Type : "Page"
       Speed : "x2"
       Exclude : []
-
-Clap Ready:
-    - Code : "19 Clap Ready"
-      Type : "Flow"
+Hi:
+    - Code : "7 Scratch head"
+      Type : "Page"
       Speed : "x1"
       Exclude : []
 
-
-Clapping:
-    - Code : "20 Clapping"
-      Type : "Flow"
+L Kick:
+    - Code : "18 L kick"
+      Type : "Page"
       Speed : "x1"
       Exclude : []
 
-
-Bow:
-    - Code : "1 Bow"
-      Type : "Flow"
+R Kick:
+    - Code : "19 R kick"
+      Type : "Page"
       Speed : "x1"
       Exclude : []
 
-Rap Chest:
-    - Code : "3 Rap chest"
-      Type : "Flow"
-      Speed : "x1"
-      Exclude : []
-
-Bravo:
-    - Code : "2 Bravo"
-      Type : "Flow"
-      Speed : "x1"
-      Exclude : []
-
-Scratch:
-    - Code : "4 Scratch head"
-      Type : "Flow"
-      Speed : "x1"
-      Exclude : []
-
-Kick:
-    - Code : "9 L kick"
-      Type : "Flow"
-      Speed : "x1"
-      Exclude : []
 
 Sit:
-    - Code : "15 Sit down"
-      Type : "Flow"
+    - Code : "25 Sit down"
+      Type : "Page"
       Speed : "x1"
       Exclude : []
 
-Stand:
-    - Code : "16 Stand up"
-      Type : "Flow"
+Fall:
+    - Code : "1 Bow"
+      Type : "Page"
       Speed : "x1"
       Exclude : []
 
-Random:
-    - Code : "46 FLT_S_L"
-      Type : "Flow"
+Dance:
+    - Code : "30 Clapping"
+      Type : "Page"
       Speed : "x1"
       Exclude : []
-
 
 
 

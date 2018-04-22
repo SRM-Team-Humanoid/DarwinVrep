@@ -22,7 +22,6 @@ dt = 0
 
 
 darwin = {1: 90, 2: -90, 3: 67.5, 4: -67.5, 7: 45, 8: -45, 9: 'i', 10: 'i', 13: 'i', 14: 'i', 17: 'i', 18: 'i'}
-darwin = {1: 90, 2: -90, 3: 67.5, 4: -67.5, 5:45, 7: 45, 8: -45, 9: 'i', 10: 'i', 13: 'i', 14: 'i', 17: 'i', 18: 'i'}
 
 PROCESS_PIPELINE = [darwin]
 
@@ -36,7 +35,9 @@ class DarwinVrep():
                     11:'j_thigh2_r',12:'j_thigh2_l',13:'j_tibia_r',14:'j_tibia_l',15:'j_ankle1_r',
                     16:'j_ankle1_l',17:'j_ankle2_r',18:'j_ankle2_l',19:'j_pan',20:'j_tilt'}
 
+        self.objectnames = ['MP_BODY_respondable','MP_NECK_respondable','MP_HEAD_respondable']
         self.MOTOR_HANDLES = {}
+        self.OBJECT_HANDLES = []
         self.CLIENT_ID= vrep.simxStart('127.0.0.1',19999,True,True,5000,5)
         #vrep.simxPauseSimulation(self.CLIENT_ID,True)
 
@@ -56,6 +57,14 @@ class DarwinVrep():
                 print "Error  = ",e
                 exit(1)
             self.MOTOR_HANDLES[i] = handle
+
+        for i in self.objectnames:
+            e,handle = vrep.simxGetObjectHandle(self.CLIENT_ID,i,vrep.simx_opmode_oneshot_wait)
+            if e!=0:
+                print "Error = ",e
+                exit(1)
+            self.OBJECT_HANDLES.append(handle)
+            
      
     def getPos(self):
             angles = {}
@@ -69,7 +78,36 @@ class DarwinVrep():
             vrep.simxSetJointTargetPosition(CLIENT_ID,MOTOR_HANDLES[key],math.radians(val),vrep.simx_opmode_oneshot_wait)
 
 
+    def getEuler(self):
+        e,handle = vrep.simxGetObjectHandle(self.CLIENT_ID,'MP_BODY_respondable',vrep.simx_opmode_oneshot_wait)
+        print handle
+        _,euler = vrep.simxGetObjectOrientation(self.CLIENT_ID,handle,-1,vrep.simx_opmode_oneshot_wait)
+        print euler
+
+
+    def getObjPos(self):
+        e,handle = vrep.simxGetObjectHandle(self.CLIENT_ID,'MP_BODY_respondable',vrep.simx_opmode_oneshot_wait)
+        _,pos = vrep.simxGetObjectPosition(self.CLIENT_ID,handle,-1,vrep.simx_opmode_oneshot_wait)
+        return handle,pos
+
+    def setObjPos(self):
+        e,handle = vrep.simxGetObjectHandle(self.CLIENT_ID,'MP_BODY_respondable',vrep.simx_opmode_oneshot_wait)
+        vrep.simxSetObjectPosition(self.CLIENT_ID,handle,-1,[0.6,0.6,0.6],vrep.simx_opmode_oneshot_wait)
+
+
+
+
+    def setEuler(self):
+        e,handle = vrep.simxGetObjectHandle(self.CLIENT_ID,'MP_BODY_respondable',vrep.simx_opmode_oneshot_wait)
+        vrep.simxSetObjectOrientation(self.CLIENT_ID,handle,-1,[0,0,0],vrep.simx_opmode_oneshot_wait)
+
+    def reset(self):
+        e,handle = vrep.simxGetObjectHandle(self.CLIENT_ID,'MP_BODY_respondable',vrep.simx_opmode_oneshot_wait)
+        vrep.simxRemoveModel(self.CLIENT_ID,handle,vrep.simx_opmode_blocking)
+        vrep.simxLoadModel(self.CLIENT_ID,'darwin.ttm',0,vrep.simx_opmode_blocking)
+
     def execute_motion(self,vel_sets):
+        #vrep.simxPauseSimulation(self.CLIENT_ID,0)
         vrep.simxSynchronous(self.CLIENT_ID,True)
         vrep.simxStartSimulation(self.CLIENT_ID,vrep.simx_opmode_oneshot)
         for dur,vels in vel_sets:
@@ -86,6 +124,7 @@ class DarwinVrep():
              vrep.simxSetJointTargetVelocity(self.CLIENT_ID,self.MOTOR_HANDLES[key],0,vrep.simx_opmode_oneshot)
         vrep.simxPauseCommunication(self.CLIENT_ID,0)
         vrep.simxSynchronousTrigger(self.CLIENT_ID)
+        #vrep.simxPauseSimulation(self.CLIENT_ID,1)
 
 
 
@@ -136,6 +175,9 @@ class Robot(object):
             print e
             exit()
 
+
+    def reset(self):
+        self.vrep_connector.reset()
 
 
     def load_primitive(self,prim_dict):
@@ -328,21 +370,33 @@ class Robot(object):
 
 
 r = Robot(18,"motion_script.yaml")
-time.sleep(1)
-#r.execute("Balance")
-#r.execute("Kick")
-#r.execute("Balance")
-#r.execute("Random")
-#r.execute("W_Init")
-#for i in range(30):
-   #r.execute("W_Move")
+vrep.simxPauseSimulation(r.vrep_connector.CLIENT_ID,1)
 
-#r.execute("Balance")
+print("1 Sit")
+print("2 Fall")
+print("3 Shake Hand")
+print("4 Left Kick")
+print("5 Right Kick")
+print("6 Walk")
 
-#r.execute("Balance")
-#r.execute("Walk")
-#r.execute("Bravo")
-#r.execute("Sit")
-#r.execute("Stand")
-r.execute("Scratch")
+m = int(raw_input("Enter Motion to Execute - "))
 
+if m==1:
+    r.execute("Sit")
+if m==2:
+    r.execute("Fall")
+if m==3:
+    r.execute("Hi")
+if m==4:
+    r.execute("L Kick")
+if m==5:
+    r.execute("R Kick")
+
+if m==6:
+    r.execute("W_Init")
+    for i in range(3):
+        r.execute("W_Move")
+
+vrep.simxPauseSimulation(r.vrep_connector.CLIENT_ID,0)
+raw_input("Exit?")
+r.reset()
